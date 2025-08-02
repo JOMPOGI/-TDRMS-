@@ -90,7 +90,7 @@ src/
 ### 👤 Viewer
 - Search and view receipts
 - Download receipts
-- Verify QR codes
+- Verify receipts
 - Access receipt information
 
 ### 📝 Encoder
@@ -116,14 +116,8 @@ src/
 - **Branding colors** configuration
 - **Template management** for admins
 
-### QR Code System
-- **Unique QR codes** for each receipt
-- **Camera scanning** support
-- **Manual entry** option
-- **Instant verification** results
-
-### Professional Receipt Design
-- **Real-world receipt format** with proper numbering
+### Receipt Design
+- **Receipt format** with proper numbering
 - **Organization branding** integration
 - **Professional typography** and layout
 - **Print-ready** design
