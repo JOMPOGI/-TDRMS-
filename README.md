@@ -70,7 +70,6 @@ src/
 │   ├── EncoderDashboard.jsx     # Encoder main dashboard
 │   ├── ReceiptForm.jsx          # Receipt creation form
 │   ├── ReceiptArchive.jsx       # Encoder receipt archive
-│   ├── QRVerifier.jsx           # QR code verification
 │   ├── AdminDashboard.jsx       # Admin main dashboard
 │   ├── TemplateManager.jsx      # Template management
 │   ├── UserRoleManager.jsx      # User role management
