@@ -1,6 +1,6 @@
 # Smart Transaction and Donation Receipt Management System (TDRMS)
 
-A comprehensive React-based web application for managing smart transactions and donation receipts with role-based access control, QR code verification, and professional banking-style UI.
+A user-friendly system designed for NU Dasma student organizations to easily customize and manage their Official Receipts (OR) as proof of payment for donations, membership fees, and purchases. 
 
 ## Features
 
@@ -13,7 +13,7 @@ A comprehensive React-based web application for managing smart transactions and 
 - **Professional receipt design** with gold and blue banking theme
 - **Receipt issuance** with customizable templates
 - **Receipt archive** with search and filtering
-- **QR code generation** and verification
+- **Receipt verification
 - **Download functionality** for receipts
 
 ### 👥 Admin Features
@@ -22,17 +22,6 @@ A comprehensive React-based web application for managing smart transactions and 
 - **Advanced receipt archive** with detailed analytics
 - **Report generation** - Financial reports and analytics
 - **Notification system** - System alerts and notifications
-
-### 📱 QR Code System
-- **QR code generation** for each receipt
-- **QR verification** via camera scanning or manual entry
-- **Fraud prevention** through digital verification
-
-### 🎨 Professional UI
-- **Banking-style design** with gold and blue theme
-- **Responsive layout** for desktop and mobile
-- **Professional typography** and spacing
-- **Accessibility features** included
 
 ## Test Accounts
 
