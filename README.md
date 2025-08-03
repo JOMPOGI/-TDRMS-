@@ -179,4 +179,4 @@ For support or questions, please contact the development team.
 
 ---
 
-**TDRMS** - Professional Smart Transaction and Donation Receipt Management System 
+**TDRMS** - Smart Transaction and Donation Receipt Management System 
