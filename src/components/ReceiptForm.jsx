@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { QRCodeSVG } from 'qrcode.react';
 import { api } from '../services/api';
 
 const PAYMENT_TYPES = ['Donation', 'Membership Fee', 'Purchase'];
@@ -19,6 +20,7 @@ export default function ReceiptForm({ user, onSuccess }) {
   const [isLoading, setIsLoading] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [newTag, setNewTag] = useState('');
+  const [generatedReceipt, setGeneratedReceipt] = useState(null);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -99,7 +101,8 @@ export default function ReceiptForm({ user, onSuccess }) {
         issuedBy: user.name
       };
       
-      await api.createReceipt(receiptData);
+      const receipt = await api.createReceipt(receiptData);
+      setGeneratedReceipt(receipt);
       setShowSuccessModal(true);
     } catch (error) {
       alert('Error creating receipt: ' + error.message);
@@ -364,9 +367,9 @@ export default function ReceiptForm({ user, onSuccess }) {
       </form>
       
       {/* Success Modal */}
-      {showSuccessModal && (
+      {showSuccessModal && generatedReceipt && (
         <div className="modal-overlay">
-          <div className="modal-content">
+          <div className="modal-content" style={{ maxWidth: '600px' }}>
             <div style={{ textAlign: 'center' }}>
               <div style={{
                 fontSize: '48px',
@@ -381,6 +384,106 @@ export default function ReceiptForm({ user, onSuccess }) {
               <p style={{ color: 'var(--dark-gray)', marginBottom: '24px' }}>
                 The receipt has been issued and saved to the archive.
               </p>
+              
+              {/* Receipt Preview with QR Code */}
+              <div style={{
+                background: 'white',
+                border: '2px solid var(--primary-gold)',
+                borderRadius: '12px',
+                padding: '24px',
+                marginBottom: '24px',
+                textAlign: 'left'
+              }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '16px' }}>
+                  <div>
+                    <div style={{ fontSize: '18px', fontWeight: 'bold', color: 'var(--primary-blue)' }}>
+                      {generatedReceipt.id}
+                    </div>
+                    <div style={{ fontSize: '14px', color: 'var(--dark-gray)' }}>
+                      {new Date().toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric'
+                      })}
+                    </div>
+                  </div>
+                  <div style={{ fontSize: '20px', fontWeight: 'bold', color: 'var(--success-green)' }}>
+                    ₱{parseFloat(generatedReceipt.amount).toLocaleString('en-PH', { minimumFractionDigits: 2 })}
+                  </div>
+                </div>
+                
+                <div style={{ marginBottom: '16px' }}>
+                  <div style={{ fontWeight: '600', color: 'var(--primary-blue)', marginBottom: '4px' }}>
+                    {generatedReceipt.donorName}
+                  </div>
+                  <div style={{ color: 'var(--dark-gray)', fontSize: '14px', marginBottom: '8px' }}>
+                    {generatedReceipt.contactInfo}
+                  </div>
+                  <div style={{ color: 'var(--dark-gray)', fontSize: '14px' }}>
+                    {generatedReceipt.description}
+                  </div>
+                </div>
+                
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                    <span style={{
+                      background: 'var(--accent-blue)',
+                      color: 'white',
+                      padding: '4px 8px',
+                      borderRadius: '4px',
+                      fontSize: '12px'
+                    }}>
+                      {generatedReceipt.paymentType}
+                    </span>
+                    <span style={{
+                      background: 'var(--light-gold)',
+                      color: 'var(--primary-blue)',
+                      padding: '4px 8px',
+                      borderRadius: '4px',
+                      fontSize: '12px'
+                    }}>
+                      {generatedReceipt.template}
+                    </span>
+                  </div>
+                  
+                  <div style={{ fontSize: '14px', color: 'var(--dark-gray)' }}>
+                    Issued by: {generatedReceipt.issuedBy}
+                  </div>
+                </div>
+                
+                {/* QR Code */}
+                <div style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  marginTop: '20px',
+                  padding: '16px',
+                  background: 'var(--light-gray)',
+                  borderRadius: '8px'
+                }}>
+                  <div style={{ textAlign: 'center' }}>
+                    <QRCodeSVG
+                      value={JSON.stringify({
+                        receiptId: generatedReceipt.id,
+                        donorName: generatedReceipt.donorName,
+                        amount: generatedReceipt.amount,
+                        date: new Date().toISOString(),
+                        issuedBy: generatedReceipt.issuedBy
+                      })}
+                      size={120}
+                      level="M"
+                      includeMargin={true}
+                    />
+                    <div style={{
+                      fontSize: '12px',
+                      color: 'var(--dark-gray)',
+                      marginTop: '8px'
+                    }}>
+                      Scan to verify receipt
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
               <button
                 className="btn btn-primary"
                 onClick={handleSuccessClose}

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { QRCodeSVG } from 'qrcode.react';
 import { api } from '../services/api';
 
 export default function ReceiptArchive({ user }) {
@@ -228,6 +229,42 @@ export default function ReceiptArchive({ user }) {
                     🔍 Details
                   </button>
                 </div>
+              </div>
+              
+              {/* QR Code Section */}
+              <div style={{
+                marginTop: '16px',
+                padding: '16px',
+                background: 'var(--light-gray)',
+                borderRadius: '8px',
+                textAlign: 'center'
+              }}>
+                <h5 style={{ color: 'var(--primary-blue)', marginBottom: '12px', fontSize: '14px' }}>
+                  📱 QR Code for Verification
+                </h5>
+                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '16px' }}>
+                  <QRCodeSVG
+                    value={JSON.stringify({
+                      receiptId: receipt.id,
+                      donorName: receipt.donorName,
+                      amount: receipt.amount,
+                      date: receipt.date,
+                      issuedBy: receipt.issuedBy
+                    })}
+                    size={80}
+                    level="M"
+                    includeMargin={true}
+                  />
+                  <div style={{ textAlign: 'left', fontSize: '12px', color: 'var(--dark-gray)' }}>
+                    <div><strong>Receipt ID:</strong> {receipt.id}</div>
+                    <div><strong>Donor:</strong> {receipt.donorName}</div>
+                    <div><strong>Amount:</strong> ₱{receipt.amount.toLocaleString()}</div>
+                    <div><strong>Date:</strong> {formatDate(receipt.date)}</div>
+                  </div>
+                </div>
+                <p style={{ fontSize: '11px', color: 'var(--dark-gray)', marginTop: '8px', marginBottom: '0' }}>
+                  Scan this QR code to verify receipt authenticity
+                </p>
               </div>
             </div>
           ))}
