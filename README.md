@@ -60,6 +60,51 @@ Use these credentials to test different roles:
 4. **Open your browser**
    Navigate to `http://localhost:3000`
 
+## Deployment with GitHub Actions
+
+This project is configured for automatic deployment to GitHub Pages using GitHub Actions.
+
+### Setup Instructions
+
+1. **Create a GitHub repository**
+   - Create a new repository on GitHub
+   - Push your code to the repository
+
+2. **Enable GitHub Pages**
+   - Go to your repository Settings
+   - Navigate to "Pages" section
+   - Set source to "Deploy from a branch"
+   - Select "gh-pages" branch
+   - Save the settings
+
+3. **GitHub Actions Workflow**
+   - The workflow file `.github/workflows/deploy.yml` is already configured
+   - It automatically builds and deploys on every push to the main branch
+   - No additional setup required
+
+### How It Works
+
+- **Automatic Deployment**: Every push to the main branch triggers the workflow
+- **Build Process**: Installs dependencies and builds the React app
+- **Deployment**: Deploys the built files to the gh-pages branch
+- **Live Site**: GitHub Pages serves the latest version automatically
+
+### Team Collaboration
+
+- **Shared Repository**: All team members work on the same repository
+- **Instant Updates**: Any push to main branch updates the live site
+- **Consistent URL**: The deployed site URL remains the same
+- **Remote Access**: Anyone can access the app from any device
+
+### Workflow Details
+
+The GitHub Actions workflow:
+1. Checks out the code
+2. Sets up Node.js 20
+3. Installs dependencies with `npm ci`
+4. Builds the app with `npm run build`
+5. Deploys to GitHub Pages using the gh-pages action
+
 ## Project Structure
 
 ```
